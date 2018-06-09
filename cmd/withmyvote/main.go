@@ -3,23 +3,14 @@ package main
 import (
 	"flag"
 	"log"
-	"net/http"
 
 	"github.com/sdaros/withmyvote/pkg/server"
 )
-
-type route struct {
-	path    string
-	handler http.Handler
-}
 
 var (
 	certFile string
 	keyFile  string
 	port     string
-	routes   = []route{
-		route{"/", http.FileServer(http.Dir("/tmp"))},
-	}
 )
 
 func init() {
@@ -30,14 +21,7 @@ func init() {
 }
 
 func main() {
-	// NEXT make these changes count
 	svr := server.New(port)
 	server.Handler = server.Register(routes...)
 	log.Fatal(svr.ListenAndServe())
-	/*
-		server.ListenAndServeTLS(
-				db.LoadOrStore("certfile", "./server.crt"),
-				db.LoadOrStore("keyfile", "./server.key"),
-			)
-	*/
 }

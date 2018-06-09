@@ -4,16 +4,18 @@ import (
 	"crypto/tls"
 	"net/http"
 	"time"
+
+	"github.com/sdaros/withmyvote/pkg/app"
 )
 
-func newServer(port string) *http.Server {
+func New(port string) *http.Server {
 	server := HTTPServerWithSecureTLSOptions()
 	if port != "" {
 		server.Addr = port
 	}
 	return server
 }
-func register(routes ...route) http.Handler {
+func Register(routes ...app.Route) http.Handler {
 	mux := http.NewServeMux()
 	for _, r := range routes {
 		mux.Handle(r.path, r.handler)
