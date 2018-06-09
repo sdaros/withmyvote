@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/sdaros/withmyvote/pkg/app"
 	"github.com/sdaros/withmyvote/pkg/server"
 )
 
@@ -22,6 +23,7 @@ func init() {
 
 func main() {
 	svr := server.New(port)
-	server.Handler = server.Register(routes...)
+	svr.Handler = server.Register(app.Routes...)
+	log.Printf("Listening on port: %v\n", port)
 	log.Fatal(svr.ListenAndServe())
 }

@@ -1,4 +1,4 @@
-package withmyvote
+package server
 
 import (
 	"testing"

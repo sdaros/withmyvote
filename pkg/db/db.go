@@ -1,4 +1,4 @@
-package withmyvote
+package db
 
 import "sync"
 

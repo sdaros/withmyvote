@@ -1,4 +1,4 @@
-package withmyvote
+package server
 
 import (
 	"crypto/tls"
@@ -18,7 +18,7 @@ func New(port string) *http.Server {
 func Register(routes ...app.Route) http.Handler {
 	mux := http.NewServeMux()
 	for _, r := range routes {
-		mux.Handle(r.path, r.handler)
+		mux.Handle(r.Path, r.Handler)
 	}
 	return mux
 }
