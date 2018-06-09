@@ -4,6 +4,8 @@ import (
 	"flag"
 	"log"
 	"net/http"
+
+	"github.com/sdaros/withmyvote/pkg/server"
 )
 
 type route struct {
@@ -28,9 +30,10 @@ func init() {
 }
 
 func main() {
-	server := newServer(port)
-	server.Handler = register(routes...)
-	log.Fatal(server.ListenAndServe())
+	// NEXT make these changes count
+	svr := server.New(port)
+	server.Handler = server.Register(routes...)
+	log.Fatal(svr.ListenAndServe())
 	/*
 		server.ListenAndServeTLS(
 				db.LoadOrStore("certfile", "./server.crt"),
