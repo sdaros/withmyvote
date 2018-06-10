@@ -1,24 +1,15 @@
 package app
 
 import (
-	"fmt"
-	"log"
 	"net/http"
-	"os"
+
+	"github.com/sdaros/withmyvote/pkg/handler"
 )
 
 var (
-	// NEXT serve static content from web/static dir
-	wd = func() string {
-		wd, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-		}
-		return wd
-	}()
 	// Routes to handle
 	Routes = []Route{
-		Route{"/", http.FileServer(http.Dir(fmt.Sprintf("%s/web/static", wd)))},
+		Route{"/", handler.Root{}},
 	}
 )
 
