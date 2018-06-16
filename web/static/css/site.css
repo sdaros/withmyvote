@@ -6,11 +6,11 @@ body {
                roboto, noto,
                'segoe ui', arial,
                sans-serif;
-  max-width: 48em;
+  max-width: 96rem;
   margin: auto;
   padding: 0 5%;
-  background: #222;
-  color: #fff;
+  background: #fafafa;
+  color: #333333;
 }
 
 h1 {
@@ -21,6 +21,11 @@ p {
   font-size: 1.2em;
 }
 
+input[type=radio] {
+  min-height: 1.5em;
+  min-width: 1.5em;
+}
+
 #form {
   font-size: 1.25rem;
   line-height: 1.5;
@@ -28,6 +33,67 @@ p {
 }
 .choice {
   padding: .5rem;
+}
+.candidate {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.candidate-id {
+  color: #999999;
+  font-style: italic;
+  padding-right: 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 100;
+}
+.candidate-input {
+  margin-right: 1.25rem;
+}
+.candidate-label {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 100;
+}
+.main-content {
+  padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: georgia, serif;
+  font-size: 1rem;
+}
+.header {
+  background-color: #355edd;
+  color: #111111;
+}
+.footer {
+  background-color: #35aedd;
+  color: #111111;
+}
+.header-content {
+  padding-left: 2rem;
+  padding-top: 2rem;
+  max-width: 34em;
+}
+.footer-content {
+  padding-left: 2rem;
+  padding-top: 2rem;
+  max-width: 34em;
+}
+.issue-name-span {
+  background-color: rgba(0, 0, 0, .9);
+  line-height: 1.5;
+  color: #fff;
+  padding: .25rem;
+  letter-spacing: -.05em;
+}
+.issue-choose {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: 100;
+  font-family: georgia, serif;
+  font-style: italic;
 }
 .submit {
   border: none;
@@ -73,4 +139,200 @@ strong {
   strong {
     font-size: 1.5em;
   }
+}
+
+.bl {
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+.b--gold {
+    border-color: #ffb700;
+}
+
+.bw1 {
+    border-width: .125rem;
+}
+
+.dib {
+    display: inline-block;
+}
+
+.sans-serif {
+    font-family: -apple-system,
+                 BlinkMacSystemFont,
+                 'avenir next',
+                 avenir,
+                 'helvetica neue',
+                 helvetica,
+                 ubuntu,
+                 roboto,
+                 noto,
+                 'segoe ui',
+                 arial,
+                 sans-serif;
+}
+
+.georgia {
+    font-family: georgia, serif;
+}
+
+.i {
+    font-style: italic;
+}
+
+.fw1 {
+    font-weight: 100;
+}
+
+.tracked {
+    letter-spacing: .1em;
+}
+
+.tracked-tight {
+    letter-spacing: -.05em;
+}
+
+.lh-title {
+    line-height: 1.25;
+}
+
+.lh-copy {
+    line-height: 1.5;
+}
+
+.mw9 {
+    max-width: 96rem;
+}
+
+.black-80 {
+    color: rgba(0, 0, 0, .8);
+}
+
+.white {
+    color: #fff;
+}
+
+.bg-black-90 {
+    background-color: rgba(0, 0, 0, .9);
+}
+
+.bg-blue {
+    background-color: #357edd;
+}
+
+.pa1 {
+    padding: .25rem;
+}
+
+.pa4 {
+    padding: 2rem;
+}
+
+.pl4 {
+    padding-left: 2rem;
+}
+
+.mb2 {
+    margin-bottom: .5rem;
+}
+
+.mb4 {
+    margin-bottom: 2rem;
+}
+
+.mv0 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ttu {
+    text-transform: uppercase;
+}
+
+.f2 {
+    font-size: 2.25rem;
+}
+
+.f3 {
+    font-size: 1.5rem;
+}
+
+.f5 {
+    font-size: 1rem;
+}
+
+.f6 {
+    font-size: .875rem;
+}
+
+.f7 {
+  font-size: .75rem;
+}
+
+.measure {
+    max-width: 30em;
+}
+
+.measure-narrow {
+    max-width: 20em;
+}
+
+.center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media screen and (min-width: 30em) {
+  .header-content-ns {
+    padding-top: 2rem;
+  }
+  .candidate-label-ns {
+    font-size: 1.5rem;
+  }
+    .pt5-ns {
+        padding-top: 2rem;
+    }
+
+    .f3-ns {
+        font-size: 1.5rem;
+    }
+
+    .f4-ns {
+        font-size: 1.25rem;
+    }
+
+    .f5-ns {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 30em) and (max-width: 60em) {
+    .f1-m {
+        font-size: 3rem;
+    }
+}
+
+@media screen and (min-width: 60em) {
+    .mw9-l {
+        max-width: 96rem;
+    }
+    .main-content-l {
+      max-width: 96rem;
+      font-size: 1.5rem;
+      padding-left: 8rem;
+      padding-right: 8rem;
+    }
+    .header-content-l {
+      padding-left: 8rem;
+      padding-right: 8rem;
+    }
+    .ph7-l {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+
+    .f-subheadline-l {
+        font-size: 4rem;
+    }
 }
