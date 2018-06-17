@@ -6,23 +6,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"time"
+
+	"github.com/sdaros/withmyvote/pkg/db"
 )
 
 var (
-	viewIssue = `
-<div id="ballot">
-  <form method="POST" id="{{.Issue.Id}}">
-    {{range .Issue.candidates -}}
-	  <div class="candidate">
-		<input name="{{.Issue.Id}}" type="radio" value=""/>
-		<em>{{.Id}}: </em>{{.Text}}</br>
-	  </div>
-    {{- end}}
-	<input class="submit" name="submit" type="submit" value="Submit"/>
-  </form>
-</div>
-`
 	createIssue = `
 <div id="newBallot">
   <p>Looks like an Issue with that name doesn't exist yet</p>
@@ -37,35 +25,30 @@ var (
   <button>Create New Issue</button>
 </div>
 `
-	foo = `
+	viewIssue = `
   <header class="header">
-    <div class="header-content header-content-l">
-      <h3 class="f2 f1-m f-subheadline-l mausre lh-title mv0">
-        <span class="issue-name-span">
+    <div class="header-content header-content-ns">
+      <h3 class="issue-name issue-name-ns">
+        <span class="issue-name-span issue-name-span-ns">
           Which employee benefit would you most want?
         </span>
       </h3>
-      <h4 class="issue-choose">Choose from one of the options below</h4>
+      <h4 class="issue-choose issue-choose-ns">Choose from one of the options below</h4>
     </div>
   </header>
-  <main class="main-content main-content-l">
+  <main class="main-content main-content-ns">
     {{range .Candidates}}
     <div class="candidate">
-      <div class="candidate-id">
-        <span>{{.Id}}</span>
+      <div class="candidate-id candidate-id-ns">
+        <span>{{.ID}}</span>
       </div>
-	  <input class="candidate-input" type="radio" id="{{$.Id}}" name="{{$.Id}}" value="{{$.Id}}-{{.Id}}"/>
-	  <label for="{{$.Id}}-{{.Id}}" class="candidate-label candidate-label-ns">
+	  <input class="candidate-input candidate-input-ns" type="radio" id="{{$.ID}}" name="{{$.ID}}" value="{{$.ID}}-{{.ID}}"/>
+	  <label for="{{$.ID}}-{{.ID}}" class="candidate-label candidate-label-ns">
 		{{.Text}}
       </label>
     </div>
     {{end}}
   </main>
-  <footer class="footer">
-    <div class="footer-content footer-content-l">
-      <h5>withmy.vote from @sdaros with &lt;3</h4>
-    </div>
-  </footer>
 `
 	yourVoteHasBeenSubmitted = []byte(`
 <p>Your vote has been submitted! Thanks :-)</p>
@@ -102,7 +85,7 @@ func (b *Ballot) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		return
 	default:
 		log.Println("DEFAULT")
-		html, err := b.Fetch()
+		html, err := b.FetchOrCreate(req.URL.Path)
 		if err != nil {
 			http.Error(rw, err.Error(), http.StatusInternalServerError)
 			return
@@ -118,59 +101,23 @@ func (b *Ballot) New() error {
 }
 
 // Fetch gets
-func (b *Ballot) Fetch() (content HTML, err error) {
-	/*
-		issue, ok := db.Load(issueId)
-		if !ok {
-	*/
-	if true {
-		tmpl, err := template.New("ballot").Parse(foo)
-		if err != nil {
-			return nil, err
-		}
-		data := new(bytes.Buffer)
-		issue := struct {
-			Id          string
-			Description string
-			CreatedAt   time.Time
-			Candidates  []struct {
-				Id   int
-				Text string
-			}
-		}{
-			Id:          "employee-benefits",
-			Description: "Which employee benefit would you most want?",
-			CreatedAt:   time.Now(),
-			Candidates: []struct {
-				Id   int
-				Text string
-			}{
-				{
-					Id:   1,
-					Text: "Extra 5 days of vacation per year",
-				},
-				{
-					Id:   2,
-					Text: "Home office 8 days in a calendar month",
-				},
-				{
-					Id:   3,
-					Text: "A brand new electric car!!1!",
-				},
-			},
-		}
-		if err := tmpl.Execute(data, issue); err != nil {
-			return nil, err
-		}
-		return []byte(fmt.Sprintf(base, data)), nil
+func (b *Ballot) FetchOrCreate(key string) (content HTML, err error) {
+	d := db.Open()
+	issue, ok := db.Load(key)
+	if !ok {
+		// Issue does not exist, provide user with
+		// a form to create a new issue
+		return []byte(fmt.Sprintf(base, createIssue)), nil
 	}
-	return []byte(""), nil
-	/*
-		t.execute(createIssue)
-		}
-		t.execute(viewIssue)
-
-	*/
+	tmpl, err := template.New("ballot").Parse(viewIssue)
+	if err != nil {
+		return nil, err
+	}
+	data := new(bytes.Buffer)
+	if err := tmpl.Execute(data, issue); err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf(base, data)), nil
 }
 
 func (b *Ballot) CastVote(voterID fingerprint, issueID string, candidate int) error {
