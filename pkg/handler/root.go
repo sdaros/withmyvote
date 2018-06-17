@@ -19,7 +19,18 @@ var (
   <title>With My Vote!</title>
 </head>
 <body>
-%s
+  %s
+  <footer class="footer">
+	<h5 class="footer-content footer-content-ns">
+	  withmy.vote
+	  <span class="credit-roll">from</span>
+	  <span class="link dim">
+		<a href="https://github.com/sdaros/withmyvote">@sdaros</a>
+	  </span>
+	  <span class="credit-roll">with</span>
+	  <span class="credit-roll-love">💕</span>
+	</h5>
+  </footer>
 </body>
 </html>
 `
